@@ -71,6 +71,8 @@ header {
     position: relative;
     left: 0;
     top: 0;
+    background-color: white;
+    color: black;
 }   
 
 .logo-text {
