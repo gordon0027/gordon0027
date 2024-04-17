@@ -5,5 +5,9 @@ const header = document.header;
 
 themeButton.addEventListener('click', () => {
   body.classList.toggle('dark-theme')
+});
+
+themeButton.addEventListener('click', () => {
   header.classList.toggle('dark-theme')
 });
+
