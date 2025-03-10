@@ -1,0 +1,378 @@
+body {
+    font-family: 'Unbounded', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: white;
+}
+.header-buttons {
+    display: flex;
+    gap: 20px;
+}
+.header-buttons a, .contact-btn {
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+.contact-btn {
+    background-color: blue;
+    color: white;
+}
+.hero {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 600px;
+    margin: 50px auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    padding: 40px;
+}
+.hero-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('img/hug.png') center/cover no-repeat;
+    filter: blur(5px);
+    z-index: -2;
+}
+.hero-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+.hero-text {
+    position: relative;
+    color: white;
+    z-index: 1;
+    text-align: center;
+}
+.hero-title {
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 30px; /* Увеличен отступ */
+}
+.hero-subtext {
+    font-size: 20px;
+    max-width: 600px;
+    margin: 0 auto 40px auto; /* Увеличен отступ */
+    text-align: left;
+}
+.apply-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: blue;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 100px; /* Отступ перед новыми надписями */
+}
+.hero-features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 150px;
+}
+.hero-feature {
+    font-size: 18px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.about {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 20px;
+}
+.about-text {
+    max-width: 500px;
+}
+.about-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.about-description {
+    font-size: 20px;
+    line-height: 1.5;
+    color: #333;
+}
+.about-image {
+    width: 590px;
+    height: 450px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.about-image-container {
+    width: 590px;
+    height: 450px;
+    border-radius: 10px;
+    background: url('img/about.png') center/cover no-repeat;
+}
+
+.advantages {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 20px;
+}
+.advantages-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-align: left; /* Выравнивание заголовка влево */
+}
+.advantages-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Две колонки */
+    gap: 20px;
+}
+.advantage-block {
+    background-color: rgba(173, 216, 230, 0.3); /* Светло-голубой фон */
+    padding: 30px;
+    border-radius: 10px;
+    text-align: left;
+}
+.advantage-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.advantage-text {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.how-it-works {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 20px;
+}
+.how-it-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-align: left;
+}
+.steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.step {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.step-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: blue;
+    min-width: 50px;
+    text-align: center;
+}
+.step-text {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.5;
+}
+.trust-labels {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+}
+.trust-label {
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(0, 0, 255, 0.6); /* Полупрозрачный синий */
+    text-transform: uppercase;
+}
+
+.contact-form-section {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 20px;
+}
+
+.contact-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 100px auto 0 auto; /* Добавлен отступ сверху */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-btn {
+    display: block;
+    font-family: 'Unbounded', sans-serif;
+    width: 100%;
+    padding: 15px;
+    background-color: blue;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: darkblue;
+}
+
+.contact-note {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.footer {
+    background-color: #333; /* Черный фон */
+    color: white; /* Белый текст */
+    padding: 40px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+}
+
+.footer .footer-left {
+    margin-left: 100px;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.footer .footer-right {
+    display: flex;
+    gap: 20px;
+    margin-right: 100px;
+}
+
+.footer .footer-right a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    border-radius: 5px;
+    
+}
+
+/* Телеграм */
+.footer .footer-right a.telegram {
+    background-image: url('img/telegram.png');
+}
+
+/* WhatsApp */
+.footer .footer-right a.whatsapp {
+    background-image: url('img/whatsapp.png');
+}
+
+/* Viber */
+.footer .footer-right a.viber {
+    background-image: url('img/viber.png');
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px; /* Немного отступов по бокам */
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero {
+        height: auto;
+        padding: 20px;
+    }
+
+    .hero-title {
+        font-size: 36px;
+    }
+
+    .advantages-container {
+        grid-template-columns: 1fr; /* В одну колонку */
+    }
+
+    .step {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+}
+
+
+
+
+
