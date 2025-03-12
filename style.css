@@ -81,9 +81,9 @@ header {
     text-align: center;
 }
 .hero-title {
-    font-size: 56px;
+    font-size: 46px;
     font-weight: 700;
-    margin-bottom: 30px; /* Увеличен отступ */
+    margin-top: 50px;
 }
 .hero-subtext {
     font-size: 20px;
@@ -100,14 +100,14 @@ header {
     font-weight: 700;
     text-decoration: none;
     border-radius: 5px;
-    margin-top: 100px; /* Отступ перед новыми надписями */
+    margin-top: 50px; /* Отступ перед новыми надписями */
 }
 .hero-features {
     display: flex;
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
-    margin-top: 150px;
+    margin-top: 50px;
 }
 .hero-feature {
     font-size: 18px;
@@ -372,10 +372,16 @@ header {
     padding: 0 15px; /* Немного отступов по бокам */
 }
 
-@media (max-width: 320px) {
+@media (min-width: 150px) {
     .container {
         max-width: 100%;
     }
+
+    .hero-feature {
+        font-size: 9px;
+        padding: 5px 10px;
+    }
+
     
     header {
         flex-direction: column;
@@ -386,11 +392,6 @@ header {
         flex-direction: column;
         text-align: center;
         gap: 10px;
-    }
-
-    .hero {
-        height: auto;
-        padding: 20px;
     }
 
     .hero-title {
@@ -433,6 +434,82 @@ header {
     
     .header-buttons.active {
         display: flex;
+    }
+
+    .hero-feature {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    
+}
+
+@media (max-width: 320px) {
+    .container {
+        max-width: 100%;
+    }
+    
+    
+    .hero-feature {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .header-buttons {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .hero-title {
+        font-size: 36px;
+    }
+
+    .advantages-container {
+        grid-template-columns: 1fr; /* В одну колонку */
+    }
+
+    .step {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .burger-menu {
+        display: block;
+    }
+    
+    .header-buttons {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background: white;
+        position: absolute; /* Меню будет поверх других секций */
+        top: 60px; /* Опускаем меню под хедер */
+        right: 10px;
+        width: 200px; /* Фиксированная ширина */
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000; /* Поверх других элементов */
+    }
+    
+    .header-buttons.active {
+        display: flex;
+    }
+
+    .hero-feature {
+        font-size: 12px;
+        padding: 5px 10px;
     }
     
 }
@@ -453,11 +530,6 @@ header {
         gap: 10px;
     }
 
-    .hero {
-        height: auto;
-        padding: 20px;
-    }
-
     .hero-title {
         font-size: 36px;
     }
@@ -502,7 +574,7 @@ header {
     
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     .container {
         max-width: 100%;
     }
@@ -516,11 +588,6 @@ header {
         flex-direction: column;
         text-align: center;
         gap: 10px;
-    }
-
-    .hero {
-        height: auto;
-        padding: 20px;
     }
 
     .hero-title {
@@ -565,6 +632,10 @@ header {
         display: flex;
     }
     
+    .hero-feature {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
 }
 
 
