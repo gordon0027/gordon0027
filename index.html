@@ -9,23 +9,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <div class="container">
 <body>
     <header>
         <a href="#" class="contact-btn">Связаться</a>
+        <div class="burger-menu" onclick="toggleMenu()">☰</div>
         <nav class="header-buttons">
             <a href="#about">О нас</a>
             <a href="#services">Услуги</a>
             <a href="#contacts">Контакты</a>
         </nav>
-    </header>
+    </header>       
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
         <div class="hero-text">
             <h1 class="hero-title">Эвакуация из Украины</h1>
-            <p class="hero-subtext">Помогаем молодым специалистам, студентам и семьям оперативно и без лишних сложностей выехать в безопасное место</p>
+            <p class="hero-subtext">Оказываем быструю и беспроблемную помощь в эвакуации молодых специалистов, студентов и семей в безопасное место</p>
             <a href="#" class="apply-btn">Оставить заявку</a>
             <div class="hero-features">
                 <span class="hero-feature">Консультируем</span>
@@ -36,19 +38,23 @@
         </div>
     </section>
     <section class="about">
+        <div class="about-bg"></div>
+        <div class="about-overlay"></div>
         <div class="about-text">
             <h2 class="about-title">О проекте</h2>
             <p class="about-description">
-                Мы – команда экспертов с богатым опытом в организации экстренной эвакуации
+                Мы — команда профессионалов с многолетним опытом в организации срочной эвакуации
             </p>
             <p class="about-description">
-                Наши проверенные маршруты и надежные партнеры обеспечивают безопасный выезд даже в самых сложных ситуациях
+                Благодаря проверенным маршрутам и надежным партнерам мы гарантируем безопасный выезд даже в самых сложных условиях
             </p>
             <p class="about-description">
-                Мы работаем для того, чтобы вы успели покинуть зону военных действий быстро
+                Наша цель — помочь вам оперативно покинуть зону военных действий, избегая лишних рисков и задержек
+            </p>
+            <p class="about-description">
+                Мы оказываем круглосуточную поддержку, подбираем индивидуальные решения и сопровождаем вас на каждом этапе пути
             </p>
         </div>
-        <div class="about-image-container"></div>
     </section>    
     <section class="advantages">
         <h2 class="advantages-title">Преимущества</h2>
