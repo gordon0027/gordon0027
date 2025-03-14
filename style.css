@@ -10,11 +10,13 @@ header {
     justify-content: space-between;
     align-items: center;
     max-width: 100%;
-    background-color: white;
-    width: 100%;
+    background-color: #f4f4f4;
+    width: 100vw;
     margin: 0 auto; /* Центрируем */
     padding: 15px;
     box-sizing: border-box; /* Учитываем padding в ширине */
+    top: 0;
+    left: 0;
 }
 
 /* Контейнер для кнопок */
@@ -83,7 +85,7 @@ header {
 .hero-title {
     font-size: 46px;
     font-weight: 700;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 .hero-subtext {
     font-size: 20px;
@@ -100,14 +102,14 @@ header {
     font-weight: 700;
     text-decoration: none;
     border-radius: 5px;
-    margin-top: 50px; /* Отступ перед новыми надписями */
+    margin-bottom: 30px; /* Отступ перед новыми надписями */
 }
 .hero-features {
     display: flex;
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 .hero-feature {
     font-size: 18px;
@@ -263,7 +265,7 @@ header {
 .contact-title {
     font-size: 36px;
     font-weight: 700;
-    margin-bottom: 40px;
+    margin-bottom: 0;
     text-align: left;
 }
 
@@ -323,6 +325,7 @@ header {
 .footer {
     background-color: #333; /* Черный фон */
     color: white; /* Белый текст */
+    width: 100vw;
     padding: 40px 20px;
     display: flex;
     justify-content: space-between;
@@ -518,11 +521,12 @@ header {
 
 @media (max-width: 480px) {
     .container {
-        max-width: 90%;
+        max-width: 90% !important;
     }
     
     header {
-        margin-left: 12% !important; /* Центрируем */
+        margin-left: 7% !important;
+        width: 150% !important;
         flex-direction: column;
         text-align: center;
     }
@@ -547,9 +551,16 @@ header {
     }
 
     .footer {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
+        width: 110%;
+        margin-left: -2%;
+    }
+
+    .footer .footer-left {
+        margin-left: 0 !important;
+    }
+
+    .footer .footer-right {
+        margin-right: 0;
     }
 
     .burger-menu {
@@ -574,16 +585,29 @@ header {
     .header-buttons.active {
         display: flex;
     }
-    
+
+    .how-it-works {
+        margin-left: 10%;
+    }
+
+    .advantages {
+        margin-left: 10%;
+    }
+
+
+    .contact-form-section {
+        margin-left: 10%;
+    }
 }
 
 @media (max-width: 768px) {
     .container {
-        max-width: 90%;
+        max-width: 100%;
     }
     
     header {
-        margin-left: 5%; /* Центрируем */
+        margin-left: 2%;
+        max-width: 110%;
         flex-direction: column;
         text-align: center;
     }
@@ -640,14 +664,19 @@ header {
         font-size: 14px;
         padding: 5px 10px;
     }
+
+    .trust-label {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 1200px) {
     .container {
-        max-width: 90%;
+        max-width: 100%;
     }
     
     header {
+        max-width: 110%;
         flex-direction: column;
         text-align: center;
     }
