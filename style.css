@@ -325,7 +325,7 @@ header {
 .footer {
     background-color: #333; /* Черный фон */
     color: white; /* Белый текст */
-    width: 100vw;
+    width: 100%;
     padding: 40px 20px;
     display: flex;
     justify-content: space-between;
