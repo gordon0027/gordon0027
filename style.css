@@ -275,6 +275,7 @@ header {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 600px;
+    width: 90%; /* Делаем ширину адаптивной */
     margin: 100px auto 0 auto; /* Добавлен отступ сверху */
 }
 
@@ -587,16 +588,18 @@ header {
     }
 
     .how-it-works {
-        margin-left: 10%;
+        margin-left: 12%;
     }
 
     .advantages {
-        margin-left: 10%;
+        margin-left: 5px;
     }
 
 
-    .contact-form-section {
-        margin-left: 10%;
+    .form-container {
+        margin-left: -10px;
+        width: 100%; /* Увеличиваем ширину на маленьких экранах */
+        padding: 40px; /* Уменьшаем отступы */
     }
 }
 
