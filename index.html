@@ -107,7 +107,7 @@
     <section class="contact-form-section">
         <h2 class="contact-title">Форма обратной связи</h2>
         <div class="form-container">
-            <form id="contactForm" onsubmit="sendForm(event)">
+            <form id="contactForm" action="https://formspree.io/f/mjkygoza" method="POST">
                 <div class="form-group">
                     <label for="name">Имя</label>
                     <input type="text" id="name" name="name" required>
@@ -124,7 +124,7 @@
                     <label for="contact">Никнейм или номер телефона</label>
                     <input type="text" id="contact" name="contact" required>
                 </div>
-                <button type="submit" class="submit-btn">Оставить заявку</button>
+                <button type="submit">Оставить заявку</button>
             </form>
             <p id="responseMessage" style="color: green;"></p>
             <p class="contact-note">
@@ -142,37 +142,6 @@
             <a href="https://viber.me/yourviber" target="_blank" class="viber"></a>
         </div>
     </footer>
-
-    <script>
-        function sendForm(event) {
-            event.preventDefault(); // Останавливаем стандартную отправку формы
-        
-            let form = document.getElementById("contactForm");
-            let formData = new FormData(form);
-        
-            fetch("send.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                let message = document.getElementById("responseMessage");
-                if (data === "success") {
-                    message.style.color = "green";
-                    message.textContent = "✅ Заявка успешно отправлена!";
-                    form.reset(); // Очищаем форму после успешной отправки
-                } else {
-                    message.style.color = "red";
-                    message.textContent = "❌ Ошибка при отправке заявки.";
-                }
-            })
-            .catch(error => {
-                console.error("Ошибка:", error);
-                document.getElementById("responseMessage").textContent = "❌ Ошибка связи с сервером.";
-            });
-        }
-        </script>
-
 </body>
 </div>
 </html>
