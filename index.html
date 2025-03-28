@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staking Contract Interaction</title>
+    
+    <!-- Для Ethers.js -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.6.0/dist/ethers.umd.min.js"></script>
+    
+    <style>
+        /* Общие стили для страницы */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Контейнер для всех элементов */
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Стили для кнопок */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Стили для сообщений и ошибок */
+        .message {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Staking Contract</h1>
+        <button id="connectWallet">Connect Wallet</button>
+        <button id="stakeTokens">Stake Tokens</button>
+        <button id="unstakeTokens">Unstake Tokens</button>
+        <button id="claimReward">Claim Reward</button>
+        
+        <div class="message" id="statusMessage">Please connect your wallet to interact.</div>
+    </div>
+    
+    <script>
+        // Ваш JavaScript код здесь
+        const connectButton = document.getElementById("connectWallet");
+        const stakeButton = document.getElementById("stakeTokens");
+        const unstakeButton = document.getElementById("unstakeTokens");
+        const claimButton = document.getElementById("claimReward");
+        const statusMessage = document.getElementById("statusMessage");
+
+        let provider;
+        let signer;
+        let contract;
+        let stakingTokenAddress = "0xCBDc94B77e5A39850E7BA7E21712072fb1cb54aB";
+        let stakingContractAddress = "0x9458F085CFAcd94422fa2CDfF69b2d9C2de5f34A";
+        let stakingToken;
+
+        // Замените на ваш ABI для контракта
+        const stakingContractABI = [
+            [{"inputs":[{"internalType":"contract IERC20","name":"_stakingToken","type":"address"},{"internalType":"uint256","name":"_rewardRate","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"}],"name":"RewardPaid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Staked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Unstaked","type":"event"},{"inputs":[],"name":"claimReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getPendingReward","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getStakedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"rewardRate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"stakes","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"rewardDebt","type":"uint256"},{"internalType":"uint256","name":"lastStakedTime","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"stakingToken","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalStaked","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+        ];
+
+        async function connectWallet() {
+            if (window.ethereum) {
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                await provider.send("eth_requestAccounts", []);
+                signer = provider.getSigner();
+                contract = new ethers.Contract(stakingContractAddress, stakingContractABI, signer);
+                stakingToken = new ethers.Contract(stakingTokenAddress, stakingContractABI, signer);
+
+                statusMessage.textContent = "Wallet connected successfully!";
+                statusMessage.classList.remove("error");
+            } else {
+                statusMessage.textContent = "Please install MetaMask!";
+                statusMessage.classList.add("error");
+            }
+        }
+
+        connectButton.addEventListener("click", connectWallet);
+
+        // Функция для стейкинга токенов
+        async function stakeTokens() {
+            const amount = ethers.utils.parseUnits("10", 18); // Количество токенов для стейкинга (например, 10 токенов)
+            try {
+                const tx = await contract.stake(amount);
+                await tx.wait();
+                alert("Tokens staked successfully!");
+            } catch (err) {
+                console.error(err);
+                alert("Error staking tokens.");
+            }
+        }
+
+        // Функция для анстейкинга токенов
+        async function unstakeTokens() {
+            const amount = ethers.utils.parseUnits("10", 18); // Количество токенов для анстейкинга
+            try {
+                const tx = await contract.unstake(amount);
+                await tx.wait();
+                alert("Tokens unstaked successfully!");
+            } catch (err) {
+                console.error(err);
+                alert("Error unstaking tokens.");
+            }
+        }
+
+        // Функция для получения вознаграждения
+        async function claimReward() {
+            try {
+                const tx = await contract.claimReward();
+                await tx.wait();
+                alert("Reward claimed!");
+            } catch (err) {
+                console.error(err);
+                alert("Error claiming reward.");
+            }
+        }
+
+        // Обработчики событий
+        document.getElementById("connectWallet").addEventListener("click", connectWallet);
+        document.getElementById("stakeTokens").addEventListener("click", stakeTokens);
+        document.getElementById("unstakeTokens").addEventListener("click", unstakeTokens);
+        document.getElementById("claimReward").addEventListener("click", claimReward);
+    </script>
+</body>
+</html>
