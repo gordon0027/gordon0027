@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staking Contract Interaction</title>
-    
-    <!-- Для Ethers.js -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.6.0/dist/ethers.umd.min.js"></script>
-    
     <style>
         /* Общие стили для страницы */
         body {
@@ -36,7 +33,6 @@
             color: #333;
         }
 
-        /* Стили для кнопок */
         button {
             background-color: #4CAF50;
             color: white;
@@ -58,7 +54,6 @@
             cursor: not-allowed;
         }
 
-        /* Стили для сообщений и ошибок */
         .message {
             margin-top: 20px;
             font-size: 14px;
@@ -77,12 +72,10 @@
         <button id="stakeTokens">Stake Tokens</button>
         <button id="unstakeTokens">Unstake Tokens</button>
         <button id="claimReward">Claim Reward</button>
-        
         <div class="message" id="statusMessage">Please connect your wallet to interact.</div>
     </div>
-    
+
     <script>
-        // Ваш JavaScript код здесь
         const connectButton = document.getElementById("connectWallet");
         const stakeButton = document.getElementById("stakeTokens");
         const unstakeButton = document.getElementById("unstakeTokens");
@@ -96,9 +89,14 @@
         let stakingContractAddress = "0x9458F085CFAcd94422fa2CDfF69b2d9C2de5f34A";
         let stakingToken;
 
-        // Замените на ваш ABI для контракта
+        // ABI для контракта стейкинга
         const stakingContractABI = [
             [{"inputs":[{"internalType":"contract IERC20","name":"_stakingToken","type":"address"},{"internalType":"uint256","name":"_rewardRate","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"}],"name":"RewardPaid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Staked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Unstaked","type":"event"},{"inputs":[],"name":"claimReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getPendingReward","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getStakedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"rewardRate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"stakes","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"rewardDebt","type":"uint256"},{"internalType":"uint256","name":"lastStakedTime","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"stakingToken","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalStaked","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+        ];
+
+        // ABI для токена ERC20
+        const tokenABI = [
+            [{"inputs":[{"internalType":"uint256","name":"initialSupply","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"}]
         ];
 
         async function connectWallet() {
@@ -107,7 +105,7 @@
                 await provider.send("eth_requestAccounts", []);
                 signer = provider.getSigner();
                 contract = new ethers.Contract(stakingContractAddress, stakingContractABI, signer);
-                stakingToken = new ethers.Contract(stakingTokenAddress, stakingContractABI, signer);
+                stakingToken = new ethers.Contract(stakingTokenAddress, tokenABI, signer);
 
                 statusMessage.textContent = "Wallet connected successfully!";
                 statusMessage.classList.remove("error");
@@ -117,12 +115,16 @@
             }
         }
 
-        connectButton.addEventListener("click", connectWallet);
-
-        // Функция для стейкинга токенов
         async function stakeTokens() {
-            const amount = ethers.utils.parseUnits("10", 18); // Количество токенов для стейкинга (например, 10 токенов)
+            const amount = ethers.utils.parseUnits("10", 18); // Количество токенов для стейкинга
             try {
+                // Проверяем разрешение на использование токенов
+                const allowance = await stakingToken.allowance(signer.getAddress(), stakingContractAddress);
+                if (allowance.lt(amount)) {
+                    const approveTx = await stakingToken.approve(stakingContractAddress, amount);
+                    await approveTx.wait();
+                    console.log("Tokens approved for staking.");
+                }
                 const tx = await contract.stake(amount);
                 await tx.wait();
                 alert("Tokens staked successfully!");
@@ -132,7 +134,6 @@
             }
         }
 
-        // Функция для анстейкинга токенов
         async function unstakeTokens() {
             const amount = ethers.utils.parseUnits("10", 18); // Количество токенов для анстейкинга
             try {
@@ -145,7 +146,6 @@
             }
         }
 
-        // Функция для получения вознаграждения
         async function claimReward() {
             try {
                 const tx = await contract.claimReward();
@@ -157,11 +157,10 @@
             }
         }
 
-        // Обработчики событий
-        document.getElementById("connectWallet").addEventListener("click", connectWallet);
-        document.getElementById("stakeTokens").addEventListener("click", stakeTokens);
-        document.getElementById("unstakeTokens").addEventListener("click", unstakeTokens);
-        document.getElementById("claimReward").addEventListener("click", claimReward);
+        connectButton.addEventListener("click", connectWallet);
+        stakeButton.addEventListener("click", stakeTokens);
+        unstakeButton.addEventListener("click", unstakeTokens);
+        claimButton.addEventListener("click", claimReward);
     </script>
 </body>
 </html>
